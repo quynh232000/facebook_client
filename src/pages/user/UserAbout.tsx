@@ -23,6 +23,8 @@ import { IoHome, IoLocationOutline } from "react-icons/io5";
 import UserFriend from "./UserFriend";
 import UserPhoto from "./UserPhoto";
 import UserVideo from "./UserVideo";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/reducers";
 const dataAbout = [
   {
     keyMap: "work_and_education",
@@ -312,7 +314,8 @@ const UserAbout = () => {
       link: "life_events",
     },
   ];
-  const user_id = 123;
+  const {currentUser} = useSelector((state:RootState)=>state.appReducer)
+  const user_id = currentUser?.uuid;
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const paramType = searchParams.get("type") ?? "overview";

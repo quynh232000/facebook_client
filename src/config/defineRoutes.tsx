@@ -2,6 +2,7 @@ export default {
     home:"/",
     marketplace:"/marketplace",
     watch:"/watch",
+    saved:"/saved",
     verify_email_notification:"/verify_email_notification",
     verify_email:"/verify_email/:token",
     resend_email:"/resend_verify_email",

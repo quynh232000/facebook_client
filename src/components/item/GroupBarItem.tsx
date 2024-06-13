@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { GroupModel } from "../../types/app";
 import bg from "../../assets/base/bg_view_create_group.svg"
+import { FormMartDateAgo } from "../functions/tool";
 type GroupBarItemProps ={
   group:GroupModel
 }
@@ -22,7 +23,7 @@ const GroupBarItem = ({group}:GroupBarItemProps) => {
         <div className="text-[16px] flex-1 font-medium">
           {group.name}
         </div>
-        <span className="text-text text-[14px] font-normal">Hoạt động gần nhất: 15 ngày trước</span>
+        <span className="text-text text-[14px] font-normal">Hoạt động gần nhất: {FormMartDateAgo(group.activate_recent)}</span>
       </div>
     </Link>
   );

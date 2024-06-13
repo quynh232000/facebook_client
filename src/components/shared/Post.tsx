@@ -126,7 +126,7 @@ const Post = ({ post }: PostProps) => {
     return <></>;
   } else {
     return (
-      <div className="bg-dark-bg rounded-lg p-4">
+      <div  className="bg-dark-bg rounded-lg p-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             {type == "group" && post.group ? (
@@ -147,7 +147,8 @@ const Post = ({ post }: PostProps) => {
                 </div>
               </div>
             ) : (
-              <div className="w-[40px] h-[40px] rounded-full border-2 border-primary-500">
+              <div className="w-[40px] h-[40px] rounded-full ">
+                {/* border-2 border-primary-500 */}
                 <img
                   className="w-full h-full object-cover rounded-full"
                   src={post.user.avatar ?? avatar_user}
@@ -309,7 +310,7 @@ const Post = ({ post }: PostProps) => {
                   </div>
 
                   {post.is_public && isMyPost ? (
-                    <MenuItem className="hover:bg-input flex items-center gap-2 p-2 focus:bg-input">
+                    <MenuItem onClick={()=>setIsDeleted(true)} className="hover:bg-input flex items-center gap-2 p-2 focus:bg-input">
                       <div className="text-light-1 size-[24px]">
                         <FaRegWindowClose className="size-[20px]" />
                       </div>

@@ -47,10 +47,9 @@ const SigninForm = () => {
           setErrorMess(arr[0] ?? res.message);
         }
       } else {
-        console.log(1232);
-        
         localStorage.setItem("USER_TOKEN", res.meta.access_token);
         localStorage.setItem("TOKEN_TYPE", res.meta.token_type);
+        localStorage.setItem("IS_LOGIN", JSON.stringify(true));
         // navigate("/");
         window.location.href ="/"
       }

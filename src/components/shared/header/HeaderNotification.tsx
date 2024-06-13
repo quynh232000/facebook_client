@@ -1,17 +1,26 @@
-import {
-  Button,
-  Menu,
-  MenuHandler,
-  MenuList,
-} from "@material-tailwind/react";
+import { Button, Menu, MenuHandler, MenuList } from "@material-tailwind/react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrashAlt } from "react-icons/fa";
 import { MdModeEdit } from "react-icons/md";
 import HeaderNotificationItem from "../../item/HeaderNotificationItem";
-
+import { useEffect, useState } from "react";
+import { NotificationModel } from "../../../types/app";
+import { getListNotifications } from "../../../services/NotificationService";
+import NotificateSkeleton from "../../skeleton/NotificateSkeleton";
 const HeaderNotification = () => {
+  const [notifications, setNotifications] = useState<
+    NotificationModel[] | null
+  >(null);
+  useEffect(() => {
+    getListNotifications().then((res) => {
+      if (res && res.status) {
+        setNotifications(res.data);
+      }
+    });
+  }, []);
+
   return (
-    <div className="flex h-[80vh] w-sidebar relative">
+    <div className="flex max-h-[80vh] w-sidebar relative">
       <div className="flex flex-col h-full  flex-1 overflow-y-scroll scrollbar_custom_hidden scrollbar_custom scrollbar_hover gap-4">
         <div className="flex items-center justify-between">
           <div className="text-[24px] font-bold">Thông báo</div>
@@ -45,33 +54,33 @@ const HeaderNotification = () => {
             </div>
           </div>
         </div>
-        
+
         <div className="flex gap-2">
-            <button className="bg-primary-300 text-primary-700 px-3 py-2 rounded-full font-bold">Tất cả</button>
-            <button className="hover:bg-input px-3 py-2 rounded-full font-bold">Chưa đọc</button>
+          <button className="bg-primary-300 text-primary-700 px-3 py-2 rounded-full font-bold">
+            Tất cả
+          </button>
+          <button className="hover:bg-input px-3 py-2 rounded-full font-bold">
+            Chưa đọc
+          </button>
         </div>
         <div className="flex flex-col gap-1">
-        <HeaderNotificationItem/>
-        <HeaderNotificationItem/>
-        <HeaderNotificationItem/>
-        <HeaderNotificationItem/>
-        <HeaderNotificationItem/>
-        <HeaderNotificationItem/>
-        <HeaderNotificationItem/>
-        <HeaderNotificationItem/>
-        <HeaderNotificationItem/>
-        <HeaderNotificationItem/>
-        <HeaderNotificationItem/>
-        <HeaderNotificationItem/>
-        <HeaderNotificationItem/>
-        <HeaderNotificationItem/>
-        <HeaderNotificationItem/>
-        <HeaderNotificationItem/>
-        <HeaderNotificationItem/>
-        
+          {notifications ? (
+            notifications.length > 0 ? (
+              notifications.map((noti, index) => {
+                return <HeaderNotificationItem  key={index} noti={noti}/>;
+              })
+            ) : (
+              <div className="text-center py-5">Không có thông báo mới.</div>
+            )
+          ) : (
+            <>
+              <NotificateSkeleton />
+              <NotificateSkeleton />
+              <NotificateSkeleton />
+            </>
+          )}
         </div>
       </div>
-      
     </div>
   );
 };

@@ -34,6 +34,7 @@ import { DataPost, PostModel } from "../../types/post";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducers";
 import CommentItem from "../comment/CommentItem";
+import { FormMartDateAgo } from "../functions/tool";
 type SidebarPhotoProps = {
   // postMediaId: string;
   post: PostModel;
@@ -117,7 +118,7 @@ const SidebarPhoto = ({ post }: SidebarPhotoProps) => {
                 {post ? post?.user.first_name + " " + post?.user.last_name : ""}
               </Link>
               <div className="flex items-center gap-1 text-[14px] text-text font-medium">
-                <div>{post?.created_at.split("T")[0]}</div>
+                <div>{FormMartDateAgo(post?.created_at) }</div>
                 <span>·</span>
                 <div>
                   <svg

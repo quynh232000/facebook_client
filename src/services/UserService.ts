@@ -6,6 +6,7 @@ import {
   UserToken,
   uuid,
 } from "../types/user";
+import { FormDataPost } from "../types/post";
 export const register = async (data: UserRegister) => {
   try {
     const res = await request.POST(`register`, data);
@@ -78,17 +79,21 @@ export const getRequestFriend = async () => {
     console.log(error);
   }
 };
-export const cancelSendRequestFriend = async (friend_id:number) => {
+export const cancelSendRequestFriend = async (friend_id: number) => {
   try {
-    const res = await request.GET(`user/cancel_send_request_friend?friend_id=` + friend_id);
+    const res = await request.GET(
+      `user/cancel_send_request_friend?friend_id=` + friend_id
+    );
     return res;
   } catch (error) {
     console.log(error);
   }
 };
-export const cancelRequestFriend = async (friend_id:number) => {
+export const cancelRequestFriend = async (friend_id: number) => {
   try {
-    const res = await request.GET(`user/cancel_request_friend?friend_id=` + friend_id);
+    const res = await request.GET(
+      `user/cancel_request_friend?friend_id=` + friend_id
+    );
     return res;
   } catch (error) {
     console.log(error);
@@ -102,9 +107,12 @@ export const AcceptFriendRequest = async (friend_id: number) => {
     console.log(error);
   }
 };
-export const getMediaUser = async (user_uuid: string,type:string|'image') => {
+export const getMediaUser = async (
+  user_uuid: string,
+  type: string | "image"
+) => {
   try {
-    const res = await request.GET(`user/get_media_user/${user_uuid}/${type}` );
+    const res = await request.GET(`user/get_media_user/${user_uuid}/${type}`);
     return res;
   } catch (error) {
     console.log(error);
@@ -121,7 +129,7 @@ export const getListFriend = async (user_uuid: string) => {
 };
 export const updateThumbnailUser = async (data: FormData) => {
   try {
-    const res = await request.POST(`user/update_thumbnail` , data);
+    const res = await request.POST(`user/update_thumbnail`, data);
     return res;
   } catch (error) {
     console.log(error);
@@ -129,7 +137,39 @@ export const updateThumbnailUser = async (data: FormData) => {
 };
 export const changeAvatarUser = async (data: FormData) => {
   try {
-    const res = await request.POST(`user/change_avatar` , data);
+    const res = await request.POST(`user/change_avatar`, data);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const updateDescription = async (data: FormDataPost) => {
+  try {
+    const res = await request.POST(`user/update/description`, data);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const deleteMediaUser = async (media_uuid: string, index: number) => {
+  try {
+    const res = await request.GET(`user/delete_media/${media_uuid}/${index}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const setAvatarUser = async (media_uuid: string, index: number) => {
+  try {
+    const res = await request.GET(`user/set_avatar/${media_uuid}/${index}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const setThumnailUser = async (media_uuid: string, index: number) => {
+  try {
+    const res = await request.GET(`user/set_thumbnail/${media_uuid}/${index}`);
     return res;
   } catch (error) {
     console.log(error);

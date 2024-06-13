@@ -9,6 +9,7 @@ import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { CommentModel } from "../../types/comment";
 import avatar_user from "../../assets/base/avatar_user.webp"
+import { FormMartDateAgo } from "../functions/tool";
  
 type CommentItemProps={
   comment:CommentModel
@@ -50,7 +51,7 @@ const CommentItem = ({comment}:CommentItemProps) => {
         </div>
         <div className="flex gap-4 text-[13px] py-1 text-text">
           <div className="flex gap-1">
-            <div>{comment.created_at.split("T")[0]}</div>
+            <div>{FormMartDateAgo(comment.created_at)}</div>
             {/* <span>ngày</span> */}
           </div>
           <div className="font-bold cursor-pointer">Thích</div>

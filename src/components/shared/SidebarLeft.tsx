@@ -7,6 +7,7 @@ import avatar_user from "../../assets/base/avatar_user.webp";
 import { GroupModel } from "../../types/app";
 import { getMyGroups, groupJoined } from "../../services/GroupService";
 import bg from "../../assets/base/bg_view_create_group.svg"
+import GroupItemSkeleton from "../skeleton/GroupItemSkeleton";
 const sidebarItems = [
   {
     id: 1,
@@ -195,7 +196,12 @@ const SidebarLeft = () => {
                 </div>
               </Link>
             );
-          }):<div className="flex justify-center">...</div>}
+          }):<div className="flex flex-col gap-2">
+             <GroupItemSkeleton/>
+             <GroupItemSkeleton/>
+             <GroupItemSkeleton/>
+            </div>}
+         
       </div>
     </div>
   );

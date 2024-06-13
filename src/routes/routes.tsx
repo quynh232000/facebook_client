@@ -29,6 +29,7 @@ import SinglePost from "../pages/SinglePost";
 import VerifyEmailNotification from "../pages/VerifyEmailNotification";
 import VerifyEmail from "../pages/VerifyEmail";
 import ResendEmailVerify from "../pages/ResendEmailVerify";
+import SavePosts from "../pages/SavePosts";
 const publicRoutes = [
     {
         layout:AuthLayout,
@@ -68,10 +69,7 @@ const privateRoutes =[
            
            
            
-            {
-                path: defineRoutes.gaming,
-                component:Gaming
-            },
+           
             {
                 path: defineRoutes.stories,
                 component:Stories
@@ -160,12 +158,20 @@ const privateRoutes =[
                 component:Marketpalce
             },
             {
+                path: defineRoutes.gaming,
+                component:Gaming
+            },
+            {
                 path: defineRoutes.bookmarks,
                 component:Bookmark
             },
             {
                 path: defineRoutes.post,
                 component:SinglePost
+            },
+            {
+                path: defineRoutes.saved,
+                component:SavePosts
             },
         ]
     }

@@ -214,7 +214,7 @@ const HeaderUser = () => {
                 ? currentUser?.thumbnail || thumbnail_user
                 : thumbnail_user
             }
-            alt=""
+            alt="thumbnail"
           />
           {!isChangeBg && user.id == currentUser?.id ? (
             <label
@@ -271,7 +271,7 @@ const HeaderUser = () => {
                 </h3>
                 {/* <div>(Mr Quynh)</div> */}
               </div>
-              <div className="text-text flex gap-4">
+              <div className="text-text flex gap-4 mb-4 pb-4">
                 {currentUser && currentUser?.friends_count > 0 && (
                   <div>{currentUser?.friends_count} bạn bè</div>
                 )}
@@ -283,7 +283,7 @@ const HeaderUser = () => {
                   <div>{currentUser?.friends_count} bạn chung</div>
                 ))}
               </div>
-              <div className="flex mt-2">
+              {/* <div className="flex mt-2">
                 <Link
                   to={"/user/asdsad"}
                   className="w-[32px] h-[32px] rounded-full shadow-sm border-2 border-input shadow-gray-500"
@@ -324,24 +324,24 @@ const HeaderUser = () => {
                     alt=""
                   />
                 </Link>
-              </div>
+              </div> */}
             </div>
             <div className="mt-4 md:mt-0">
               <div className="flex gap-2">
                 {user.id == currentUser?.id ? (
                   <>
-                    <button className="flex items-center gap-2 bg-primary-500 py-2 px-3 rounded-lg hover:bg-primary-600">
+                    <Link to={"story/create"} className="flex items-center gap-2 bg-primary-500 py-2 px-3 rounded-lg hover:bg-primary-600">
                       <div>
                         <IoAddOutline />
                       </div>
                       <span>Thêm vào tin</span>
-                    </button>
-                    <button className="flex items-center gap-2 bg-input py-2 px-3 rounded-lg hover:bg-gray-700">
+                    </Link>
+                    <Link to={'/user/'+currentUser.uuid+"/about"} className="flex items-center gap-2 bg-input py-2 px-3 rounded-lg hover:bg-gray-700">
                       <div>
                         <FaPen />
                       </div>
                       <span>Chỉnh sửa trang cá nhân</span>
-                    </button>
+                    </Link>
                   </>
                 ) : (
                   <>

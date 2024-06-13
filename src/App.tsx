@@ -17,8 +17,11 @@ import audioNoti from "./assets/media/nhac_thong_bao.mp3";
 function App() {
   const dispatch = useDispatch();
 
-  const { listChatUsers} = useSelector((state: RootState) => state.chatBoxReducer);
+  const { listChatUsers } = useSelector(
+    (state: RootState) => state.chatBoxReducer
+  );
   const stateApp = useSelector((state: RootState) => state.appReducer);
+  const { isLogin } = useSelector((state: RootState) => state.authReducer);
 
   useEffect(() => {
     if (stateApp.isNotify) {
@@ -26,7 +29,7 @@ function App() {
         dispatch(closeNotify());
       }, 5000);
     }
-  });
+  }, [stateApp.isNotify]);
   const onClose = () => {
     dispatch(closeNotify());
   };
@@ -87,16 +90,16 @@ function App() {
         </AuthProvider>
       </main>
       {/* chat box */}
-      {listChatUsers && listChatUsers.length > 0 && (
+      {isLogin && listChatUsers && listChatUsers.length > 0 && (
         <div className="fixed bottom-0 right-[10px] md:right-[80px] z-10 flex gap-4">
           {listChatUsers.map((user, index) => {
-            return <ChatBox key={index} user={user} />;
+            return <ChatBox key={index} user_chat={user} />;
           })}
         </div>
       )}
       {/* notify */}
 
-      {stateApp.isNotify && (
+      {isLogin && stateApp.isNotify && (
         <>
           <Toast
             type={stateApp.dataNotify.type}

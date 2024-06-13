@@ -64,9 +64,9 @@ export const groupJoined = async () => {
     console.log(error);
   }
 };
-export const getPostGroup = async (group_uuid:string) => {
+export const getPostGroup = async (group_uuid:string,page:number) => {
   try {
-    const res = await request.GET(`group/get_post_by_group/${group_uuid}`);
+    const res = await request.GET(`group/get_post_by_group/${group_uuid}?page=${page}`);
     return res;
   } catch (error) {
     console.log(error);
@@ -80,9 +80,9 @@ export const getImagesGroup = async (group_uuid:string) => {
     console.log(error);
   }
 };
-export const getPostFeed = async () => {
+export const getPostFeed = async (page:number) => {
   try {
-    const res = await request.GET(`group/get_post_feed`);
+    const res = await request.GET(`group/get_post_feed?page=${page}`);
     return res;
   } catch (error) {
     console.log(error);

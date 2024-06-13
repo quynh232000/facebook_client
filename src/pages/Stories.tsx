@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getListStories } from "../services/StoryService";
 import { StoryModel } from "../types/app";
 import ViewStory from "../components/shared/ViewStory";
+import StoryBarItemSkeleton from "../components/skeleton/StoryBarItemSkeleton";
 
 
 const Stories = () => {
@@ -18,9 +19,11 @@ const Stories = () => {
   const uuid = arrayPath[2];
   
   const [stories, setStories] = useState([]);
+  const [isLoading,setIsLoading] = useState(true)
   useEffect(() =>{
       getListStories(1).then((res) =>{
           if(res.status) setStories(res.data)
+            setIsLoading(false)
       })
      
   },[])
@@ -36,9 +39,6 @@ const Stories = () => {
               >
                 <IoMdClose />
               </div>
-              {/* <Link to={"/"} className="w-[42px] h-[42px]">
-                <img src={logo} alt="" />
-              </Link> */}
             </div>
             <div className="flex flex-col gap-2 p-3 overflow-y-scroll scrollbar_custom">
               <div className="flex flex-col gap-3">
@@ -69,12 +69,15 @@ const Stories = () => {
               </div>
               <div className="flex flex-col pt-4 gap-2">
                 <div className="font-bold">Tất cả tin</div>
-                <div className="flex flex-col gap-1">
+                {isLoading? <div className="flex flex-col gap-1">
+                  <StoryBarItemSkeleton/>
+                  <StoryBarItemSkeleton/>
+                  <StoryBarItemSkeleton/>
+                </div>: <div className="flex flex-col gap-1">
                   {stories && stories.map((story:StoryModel,index)=>{
                     return <StoryItem active={uuid == story.user.uuid} key={index} story={story}/>
                   })}
-                 
-                </div>
+                </div>}
               </div>
             </div>
           </div>

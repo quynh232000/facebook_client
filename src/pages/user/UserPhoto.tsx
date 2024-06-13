@@ -15,14 +15,14 @@ import { RootState } from "../../redux/reducers";
 import { PostMediaModel } from "../../types/post";
 
 const UserPhoto = () => {
-  const stateApp = useSelector((state: RootState) => state.appReducer);
-  const user = stateApp.currentUser;
+  const {currentUser} = useSelector((state: RootState) => state.appReducer);
+ 
   const [mediaImageUser, setMediaImageUser] = useState([]);
   useEffect(() => {
-    user && getMediaUser(user.uuid,'image').then((res) => {
+    currentUser && getMediaUser(currentUser.uuid,'image').then((res) => {
       res.status && setMediaImageUser(res.data);
     });
-  }, [user]);
+  }, [currentUser]);
   
   return (
     <div className="bg-dark-bg px-4 py-2 rounded-lg">
@@ -62,26 +62,26 @@ const UserPhoto = () => {
         </div>
         <div className="flex text-[15px]">
           <Link
-            to={"/user/asd/photos_off"}
+            to={"/user/"+currentUser?.uuid+"/photos_off"}
             className="py-3 text-center px-4 border-b-2 border-primary-600 text-primary-500 font-medium w-fit"
           >
             Ảnh có mặt bạn
           </Link>
           <Link
-            to={"/user/asd/photos_by"}
+            to={"/user/"+currentUser?.uuid+"/photos_by"}
             className="py-3 text-center px-4 border-b-2 border-transparent text-text font-medium w-fit hover:bg-input rounded-lg"
           >
             Ảnh của bạn
           </Link>
           <Link
-            to={"/user/asd/photos_abums"}
+            to={"/user/"+currentUser?.uuid+"/photos_abums"}
             className="py-3 text-center px-4 border-b-2 border-transparent text-text font-medium w-fit hover:bg-input rounded-lg"
           >
             Abum
           </Link>
         </div>
       </div>
-      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6  gap-4 py-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6  gap-2 lg:gap-4 py-4">
       {mediaImageUser.length > 0 &&
           mediaImageUser.map((item: PostMediaModel) => {
             const files = JSON.parse(item.file);

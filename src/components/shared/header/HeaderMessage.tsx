@@ -9,8 +9,20 @@ import { FaTrashAlt } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
 import { MdModeEdit } from "react-icons/md";
 import HeaderMessageItem from "../../item/HeaderMessageItem";
+import { useEffect, useState } from "react";
+import { getConversation } from "../../../services/ChatService";
+import { ConversationModel } from "../../../types/app";
 
 const HeaderMessage = () => {
+  const [conversations ,setConversations] = useState<ConversationModel[]>([])
+  useEffect(()=>{
+    getConversation().then(res=>{
+      if(res && res.status){
+        setConversations(res.data)
+      }
+    })
+  },[])
+  
   return (
     <div className="flex h-[80vh] w-sidebar relative">
       <div className="flex flex-col h-full  flex-1 overflow-y-scroll scrollbar_custom_hidden scrollbar_custom scrollbar_hover gap-4">
@@ -65,20 +77,11 @@ const HeaderMessage = () => {
           </button>
         </div>
         <div className="flex flex-col gap-1 hover:bg-dark-bg">
-          <HeaderMessageItem />
-          <HeaderMessageItem />
-          <HeaderMessageItem />
-          <HeaderMessageItem />
-          <HeaderMessageItem />
-          <HeaderMessageItem />
-          <HeaderMessageItem />
-          <HeaderMessageItem />
-          <HeaderMessageItem />
-          <HeaderMessageItem />
-          <HeaderMessageItem />
-          <HeaderMessageItem />
-          <HeaderMessageItem />
-          <HeaderMessageItem />
+          {conversations && conversations .length>0 && 
+          conversations.map((conversation, index) =>{
+            return <HeaderMessageItem key={index} conversation={conversation} />
+          })}
+        
         </div>
       </div>
       <button className="absolute bg-dark-bg bottom-0 text-center right-0 left-0 pb-2 pt-4 text-primary-700 font-bold hover:underline">

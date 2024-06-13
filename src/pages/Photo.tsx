@@ -33,7 +33,7 @@ const Photo = () => {
 
   const navigate = useNavigate();
   const handleBack = () => {
-    navigate("/");
+    navigate(-1);
   };
   useEffect(() => {
     setIndexImage(paramIndex - 1);

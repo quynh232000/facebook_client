@@ -21,13 +21,15 @@ const initialState: SomeState = {
   },
   currentGroup:null,
 };
-
 const appReducer = createSlice({
   name: "app",
   initialState,
   reducers: {
     setCurrentUser(state, data) {
-      state.currentUser = data.payload;
+      state.currentUser = {...state.currentUser,...data.payload};
+    },
+    updateCurrentUser(state, data) {
+      state.currentUser = {...state.currentUser,...data.payload};
     },
     closeNotify(state){
       state.isNotify = false;
@@ -43,8 +45,9 @@ const appReducer = createSlice({
     setCurrentGroup(state, data) {
       state.currentGroup = data.payload;
     },
+
   },
 });
 
-export const { setCurrentUser,setNotify ,closeNotify,setCurrentGroup} = appReducer.actions;
+export const { setCurrentUser,setNotify ,closeNotify,setCurrentGroup,updateCurrentUser} = appReducer.actions;
 export default appReducer.reducer;

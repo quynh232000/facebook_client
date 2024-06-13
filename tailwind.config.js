@@ -70,6 +70,7 @@ export default withMT({
         '100':"100%",
         '420': '420px',
         '465': '465px',
+        '680':'680px',
         'content':'680px',
         'sidebar':'360px',
         'sidebar_user':'502px',

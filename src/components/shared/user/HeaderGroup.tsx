@@ -218,7 +218,7 @@ const HeaderGroup = () => {
                 )}
                 <span>·</span>
                 <div>
-                  {groupInfo ? groupInfo?.members.length + " thành viên" : ""}{" "}
+                  {groupInfo ? (groupInfo?.members.length+1) + " thành viên" : ""}
                 </div>
               </div>
               <div className="flex mt-4 justify-between items-center">

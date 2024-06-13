@@ -46,7 +46,7 @@ const FriendItem = ({ user, type }: FriendItemProps) => {
           alt="avatar_user"
         />
       </div>
-      <div className="flex flex-col p-3 mb-2">
+      <div className="flex flex-col px-2 mb-2">
         <Link to={"/user/" + user.uuid} className="font-medium text-[18px]">
           {user.first_name + " " + user.last_name}
         </Link>
@@ -85,7 +85,7 @@ const FriendItem = ({ user, type }: FriendItemProps) => {
                     Xác nhận
                   </span>
                 </div>
-                <div className="flex py-2 hover:bg-primary-600 cursor-pointer justify-center items-center mt-4 gap-2 text-primary-700 bg-primary-300 rounded-lg">
+                <div className="flex py-2 hover:bg-primary-600 cursor-pointer justify-center items-center mt-2 gap-2 text-primary-700 bg-primary-300 rounded-lg">
                   <div className="text-[18px] ">
                     <FaUserTimes />
                   </div>

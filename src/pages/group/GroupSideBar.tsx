@@ -25,7 +25,7 @@ const GroupSideBar = () => {
   }, []);
 
   return (
-    <div className="w-sidebar bg-dark-bg h-full">
+    <div className="w-sidebar bg-dark-bg h-full hidden lg:block">
       <div className="flex flex-col h-full">
         <div className="flex flex-col gap-2 p-4">
           <div className="font-bold text-[26px]">Nhóm</div>

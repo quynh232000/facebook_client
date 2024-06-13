@@ -10,7 +10,7 @@ export const createPost = async (data:FormData) => {
 };
 export const getList = async (page:number) => {
   try {
-    const res = await request.GET(`post/list`, page);
+    const res = await request.GET(`post/list?page=`+page);
     return res;
   } catch (error) {
     console.log(error);
@@ -64,15 +64,14 @@ export const getPostDetailByPostMediaMedia = async (post_media_id:string) => {
     console.log(error);
   }
 };
-export const getPostUser = async (user_uuid:string) => {
+export const getPostUser = async (user_uuid:string,page:number) => {
   try {
-    const res = await request.GET(`post/list_post_user/`+user_uuid);
+    const res = await request.GET(`post/list_post_user/`+user_uuid+"?page="+page);
     return res;
   } catch (error) {
     console.log(error);
   }
 };
-
 export const getSinglePost = async (post_uuid:string) => {
   try {
     const res = await request.GET(`post/get_single_post/`+post_uuid);
@@ -97,6 +96,21 @@ export const deletePost = async (post_uuid:string) => {
     console.log(error);
   }
 };
-
+export const getSavedPost = async (page:number) => {
+  try {
+    const res = await request.GET(`post/get_saved_posts?page=${page}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getWatchList = async (page:number) => {
+  try {
+    const res = await request.GET(`post/watch_list?page=${page}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 

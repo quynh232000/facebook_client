@@ -3,35 +3,38 @@ import { UserModel } from "../../types/post";
 
 interface SomeState {
   user: UserModel;
-  isLogin:boolean
+  isLogin: boolean;
 }
-const getUser = localStorage.getItem("CURRENT_USER")
-const user = getUser? JSON.parse(getUser) :{
-  id: "",
-  uuid: "",
-  first_name: "",
-  last_name: "",
-  birthday: "",
-  email: "",
-  email_verified_at: "",
-  avatar: "",
-  thumbnail: "",
-  gender: "",
-  phone_number: "",
-  relationship: "",
-  location: "",
-  address: "",
-  description: "",
-  is_private: false,
-  is_banned: false,
-  created_at: "",
-  updated_at: "",
-}
+const getUser = localStorage.getItem("CURRENT_USER");
+const user = getUser
+  ? JSON.parse(getUser)
+  : {
+      id: "",
+      uuid: "",
+      first_name: "",
+      last_name: "",
+      birthday: "",
+      email: "",
+      email_verified_at: "",
+      avatar: "",
+      thumbnail: "",
+      gender: "",
+      phone_number: "",
+      relationship: "",
+      location: "",
+      address: "",
+      description: "",
+      is_private: false,
+      is_banned: false,
+      created_at: "",
+      updated_at: "",
+    };
 const initialState: SomeState = {
   user: user,
-  isLogin: !!(localStorage.getItem("IS_LOGIN"))||false,
+  isLogin: localStorage.getItem("IS_LOGIN")
+    ? JSON.parse(localStorage.getItem("IS_LOGIN")!)
+    : false,
 };
-
 const authReducer = createSlice({
   name: "auth",
   initialState,
@@ -41,10 +44,10 @@ const authReducer = createSlice({
     },
     setIsLogin(state, data) {
       state.isLogin = data.payload;
-      localStorage.setItem("IS_LOGIN",JSON.stringify(data.payload))
-    }
+      localStorage.setItem("IS_LOGIN", JSON.stringify(data.payload));
+    },
   },
 });
 
-export const { setUser,setIsLogin } = authReducer.actions;
+export const { setUser, setIsLogin } = authReducer.actions;
 export default authReducer.reducer;

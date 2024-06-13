@@ -5,9 +5,13 @@ import HeaderMessage from "./header/HeaderMessage";
 import HeaderNotification from "./header/HeaderNotification";
 import HeaderUser from "./header/HeaderUser";
 import { CiMenuBurger } from "react-icons/ci";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/reducers";
 import avatar_user from "../../assets/base/avatar_user.webp";
+import { useEffect, useState } from "react";
+import { countNotification } from "../../services/NotificationService";
+import pusher from "../../services/pusher";
+import { setNotify } from "../../redux/reducers/appReducer";
 
 const headerIcons = [
   {
@@ -76,6 +80,41 @@ const Header = () => {
   };
   const stateAuth = useSelector((state: RootState) => state.authReducer);
   const user = stateAuth.user;
+
+  // get count notifications
+  const [countnoti, setCountNoti] = useState<number>(0);
+  useEffect(() => {
+    countNotification().then((res) => {
+      if (res && res.status) {
+        setCountNoti(res.data);
+      }
+    });
+  }, []);
+  // pusher
+  const dispatch = useDispatch();
+  useEffect(() => {
+    try {
+      const channel = pusher.subscribe(`notification.${user.id}`);
+      const messageHandler = (data: { user_id: string; message: string }) => {
+        if (data) {
+          setCountNoti((prev) => prev + 1);
+          dispatch(
+            setNotify({
+              type: "success",
+              message: data.message,
+            })
+          );
+        }
+      };
+      channel.bind("count", messageHandler);
+      return () => {
+        channel.unbind_all();
+        channel.unsubscribe();
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   return (
     <header className="flex justify-between w-full bg-header-1 px-[16px] py-[10px] fixed z-50">
       <div className="flex flex-1 gap-2">
@@ -165,7 +204,7 @@ const Header = () => {
           <MenuHandler>
             <div
               title="Thông báo"
-              className=" w-[40px] h-[40px] bg-input rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-500"
+              className=" relative w-[40px] h-[40px] bg-input rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-500"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -175,11 +214,17 @@ const Header = () => {
               >
                 <path d="M3 9.5a9 9 0 1 1 18 0v2.927c0 1.69.475 3.345 1.37 4.778a1.5 1.5 0 0 1-1.272 2.295h-4.625a4.5 4.5 0 0 1-8.946 0H2.902a1.5 1.5 0 0 1-1.272-2.295A9.01 9.01 0 0 0 3 12.43V9.5zm6.55 10a2.5 2.5 0 0 0 4.9 0h-4.9z"></path>
               </svg>
+              {countnoti && countnoti > 0 ? (
+                <div className=" top-[-3px] right-[-3px] absolute w-[19px] h-[19px] bg-red rounded-full text-[14px] flex items-center justify-center">
+                  {countnoti}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </MenuHandler>
           <MenuList className="bg-dark-bg border-transparent text-text-1 shadow-md shadow-gray-700 border-t border-input">
             <>
-              {" "}
               <HeaderNotification />
             </>
           </MenuList>

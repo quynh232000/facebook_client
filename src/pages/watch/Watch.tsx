@@ -4,7 +4,37 @@ import { MdCollectionsBookmark, MdOutlineFeed } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Post from "../../components/shared/Post";
 import { BsCameraReels } from "react-icons/bs";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { PostModel } from "../../types/post";
+import { getWatchList } from "../../services/PostService";
+import PostSkeleton from "../../components/skeleton/PostSkeleton";
+import { Spinner } from "@material-tailwind/react";
 const Watch = () => {
+  const [posts,setPosts] = useState<PostModel[]>([])
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  useEffect(()=>{
+    getWatchList(page).then(res=>{
+      if (res && res.status) {
+        setPosts((prevPosts) => [...prevPosts, ...res.data]);
+        res.data.lenght != 10 ? setHasMore(false) : setHasMore(true);
+      }
+    })
+  },[page])
+  // loadmore posts
+  const observer = useRef<IntersectionObserver | null>(null);
+  const lastVideoRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          hasMore && setPage((prevPage) => prevPage + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    []
+  );
   return (
     <div className="flex h-full">
       <div className="hidden md:block w-sidebar bg-dark-bg h-full">
@@ -62,11 +92,40 @@ const Watch = () => {
         <div className="flex flex-col p-4 gap-4 w-watch ">
           <div className="text-text font-medium py-2">Video dành cho bạn</div>
           <div className="flex flex-col gap-4">
-            <Post type={"user"}/>
-            <Post type={"user"}/>
-            <Post type={"user"}/>
-            <Post type={"user"}/>
-            
+          {posts && posts.length > 0 ? (
+        <div className="flex flex-col gap-4">
+          {posts?.map((post: PostModel, index) => {
+            if (index === posts.length - 1) {
+              return (
+                <div key={index} ref={lastVideoRef}>
+                  <Post post={post} />
+                  <div className="py-5 flex justify-center">
+                    {hasMore ? (
+                      <Spinner color="blue" />
+                    ) : (
+                      <span>Không còn bài viết nào!</span>
+                    )}
+                  </div>
+                </div>
+              );
+            } else {
+              return <Post post={post} key={index} />;
+            }
+          })}
+        </div>
+      ) : (
+        <div className="flex flex-col gap-4">
+          <div className="bg-dark-bg rounded-lg p-4">
+            <PostSkeleton />
+          </div>
+          <div className="bg-dark-bg rounded-lg p-4">
+            <PostSkeleton />
+          </div>
+          <div className="bg-dark-bg rounded-lg p-4">
+            <PostSkeleton />
+          </div>
+        </div>
+      )}
           </div>
         </div>
       </div>
