@@ -57,12 +57,12 @@ const SigninForm = () => {
     });
   };
   return (
-    <div className="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-      <div className="w-1/2 flex flex-col gap-4 ">
+    <div className="flex items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 flex-col md:flex-row">
+      <div className="w-full  md:w-1/2 flex flex-col gap-4 ">
         <h3 className="text-xl font-bold md:text-5xl text-primary-500">
           Quinsocial
         </h3>
-        <span className="md:text-xl pr-20  mb-20">
+        <span className="md:text-xl md:pr-20  md:mb-20 mb-8">
           Quinsocial giúp bạn kết nối và chia sẻ với mọi người trong cuộc sống
           của bạn.
         </span>

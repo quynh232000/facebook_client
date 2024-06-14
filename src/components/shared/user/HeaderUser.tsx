@@ -1,4 +1,12 @@
-import { Tab, Tabs, TabsHeader } from "@material-tailwind/react";
+import {
+  Menu,
+  MenuHandler,
+  MenuItem,
+  MenuList,
+  Tab,
+  Tabs,
+  TabsHeader,
+} from "@material-tailwind/react";
 import { ChangeEvent, useEffect, useState } from "react";
 import {
   FaCamera,
@@ -26,6 +34,7 @@ import {
 import { FaEarthAmericas } from "react-icons/fa6";
 import { setNotify } from "../../../redux/reducers/appReducer";
 import ModalUpateAvatarPost from "../../modal/ModalUpateAvatarPost";
+import { HiDotsVertical } from "react-icons/hi";
 
 const HeaderUser = () => {
   let currentPath = "posts";
@@ -74,6 +83,8 @@ const HeaderUser = () => {
 
   const [typeBtnSuggest, setTypeBtnSuggest] = useState("");
 
+  console.log(currentUser);
+
   const [btnAccept, setBtnAccept] = useState("waiting");
   const handleAddFriend = () => {
     currentUser &&
@@ -110,9 +121,9 @@ const HeaderUser = () => {
   const [isModalUpdateAvatar, setIsModalUpdateAvatar] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-      setAvatar(currentUser?.avatar ?? avatar_user)
-  },[currentUser])
+  useEffect(() => {
+    setAvatar(currentUser?.avatar ?? avatar_user);
+  }, [currentUser]);
 
   const handleImageBg = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -165,6 +176,12 @@ const HeaderUser = () => {
             message: "Cập nhật ảnh đại diện thành công!",
           })
         );
+      });
+  };
+  const handleRemoveFriend = () => {
+    currentUser &&
+      cancelRequestFriend(currentUser.id).then((res) => {
+        if (res.status) setBtnAccept("cancelled");
       });
   };
   return (
@@ -275,13 +292,18 @@ const HeaderUser = () => {
                 {currentUser && currentUser?.friends_count > 0 && (
                   <div>{currentUser?.friends_count} bạn bè</div>
                 )}
-                {currentUser &&(currentUser.id != user.id) &&(currentUser &&
+                {currentUser &&
+                  currentUser.id != user.id &&
+                  currentUser &&
                   currentUser?.friends_count > 0 &&
                   currentUser &&
-                  currentUser?.mutual_friends > 0 && <span>•</span>)}
-                {currentUser &&(currentUser.id != user.id) &&(currentUser && currentUser?.mutual_friends > 0 && (
-                  <div>{currentUser?.friends_count} bạn chung</div>
-                ))}
+                  currentUser?.mutual_friends > 0 && <span>•</span>}
+                {currentUser &&
+                  currentUser.id != user.id &&
+                  currentUser &&
+                  currentUser?.mutual_friends > 0 && (
+                    <div>{currentUser?.friends_count} bạn chung</div>
+                  )}
               </div>
               {/* <div className="flex mt-2">
                 <Link
@@ -330,13 +352,19 @@ const HeaderUser = () => {
               <div className="flex gap-2">
                 {user.id == currentUser?.id ? (
                   <>
-                    <Link to={"story/create"} className="flex items-center gap-2 bg-primary-500 py-2 px-3 rounded-lg hover:bg-primary-600">
+                    <Link
+                      to={"story/create"}
+                      className="flex items-center gap-2 bg-primary-500 py-2 px-3 rounded-lg hover:bg-primary-600"
+                    >
                       <div>
                         <IoAddOutline />
                       </div>
                       <span>Thêm vào tin</span>
                     </Link>
-                    <Link to={'/user/'+currentUser.uuid+"/about"} className="flex items-center gap-2 bg-input py-2 px-3 rounded-lg hover:bg-gray-700">
+                    <Link
+                      to={"/user/" + currentUser.uuid + "/about"}
+                      className="flex items-center gap-2 bg-input py-2 px-3 rounded-lg hover:bg-gray-700"
+                    >
                       <div>
                         <FaPen />
                       </div>
@@ -429,20 +457,56 @@ const HeaderUser = () => {
                         <span className="font-medium">Thêm bạn bè</span>
                       </div>
                     ) : (
-                      <button className="flex items-center gap-2 bg-input py-2 px-3 rounded-lg hover:bg-gray-700">
-                        <div>
-                          <FaUserCheck />
-                        </div>
-                        <span>Bạn bè</span>
-                      </button>
+                      <>
+                        <button className="flex items-center gap-2 bg-input py-2 px-3 rounded-lg hover:bg-gray-700">
+                          <div>
+                            <FaUserCheck />
+                          </div>
+                          <span>Bạn bè</span>
+                        </button>
+                        <Menu>
+                          <MenuHandler>
+                            <div className="p-2 bg-input rounded-lg cursor-pointer flex items-center px-3">
+                              <HiDotsVertical />
+                            </div>
+                          </MenuHandler>
+                          <MenuList className="bg-dark-bg border-none shadow-sm shadow-gray-700 min-w-[84px]  p-1">
+                            <MenuItem
+                              onClick={handleRemoveFriend}
+                              className="text-text-1 hover:bg-input   text-center p-2 flex gap-2"
+                            >
+                              <FaUserMinus />
+                              Xóa bạn bè
+                            </MenuItem>
+                          </MenuList>
+                        </Menu>
+                      </>
                     )}
                     {currentUser?.is_friend == "accepted" && (
-                      <button className="flex items-center gap-2 bg-primary-500 py-2 px-3 rounded-lg hover:bg-primary-600">
-                        <div>
-                          <AiFillMessage />
-                        </div>
-                        <span>Nhắn tin</span>
-                      </button>
+                      <>
+                        <button className="flex items-center gap-2 bg-primary-500 py-2 px-3 rounded-lg hover:bg-primary-600">
+                          <div>
+                            <AiFillMessage />
+                          </div>
+                          <span>Nhắn tin</span>
+                        </button>
+                        <Menu>
+                          <MenuHandler>
+                            <div className="p-2 bg-input rounded-lg cursor-pointer flex items-center px-3">
+                              <HiDotsVertical />
+                            </div>
+                          </MenuHandler>
+                          <MenuList className="bg-dark-bg border-none shadow-sm shadow-gray-700 min-w-[84px]  p-1">
+                            <MenuItem
+                              onClick={handleRemoveFriend}
+                              className="text-text-1 hover:bg-input   text-center p-2 flex gap-2"
+                            >
+                              <FaUserMinus />
+                              Xóa bạn bè
+                            </MenuItem>
+                          </MenuList>
+                        </Menu>
+                      </>
                     )}
                   </>
                 )}
@@ -483,7 +547,6 @@ const HeaderUser = () => {
               ))}
             </TabsHeader>
           </Tabs>
-          
         </div>
       </div>
     </div>

@@ -1,6 +1,4 @@
 import { BsBackpack4Fill } from "react-icons/bs";
-import { FaUser, FaUserCheck, FaUserFriends } from "react-icons/fa";
-import { FiMessageCircle } from "react-icons/fi";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import bg from "../../assets/base/bg_view_create_group.svg"

@@ -90,22 +90,19 @@ const Friends = () => {
                   Xem tất cả
                 </Link>
               </div>
-              {requestFriend.length > 0 ? (
-                requestFriend.map((user, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4   lg:grid-cols-3 gap-2 p-4 "
-                    >
-                      <AddFriendItem user={user} type="requests" />
-                    </div>
-                  );
-                })
-              ) : (
-                <div className="text-center w-full py-5">
-                  Không có lời mời kết bạn nào!
-                </div>
-              )}
+                {requestFriend.length > 0 ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4   lg:grid-cols-3 gap-2 p-4 ">
+                  {requestFriend.map((user, index) => {
+                    return (
+                      <AddFriendItem key={index} user={user} type="requests" />
+                    );
+                  })}
+              </div>
+                ) : (
+                  <div className="text-center w-full py-5">
+                    Không có lời mời kết bạn nào!
+                  </div>
+                )}
             </div>
           )}
           {paramType != "requests" && (

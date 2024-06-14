@@ -26,7 +26,7 @@ export const getUserStory = async (uuid:string) => {
 };
 export const likePost = async (post_id:number) => {
   try {
-    const res = await request.GET(`post/like_post/?post_id=`+post_id);
+    const res = await request.GET(`post/like_post/`+post_id);
     return res;
   } catch (error) {
     console.log(error);

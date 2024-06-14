@@ -1,5 +1,6 @@
 import axios from 'axios';
-const REACT_APP_API_URL ="http://127.0.0.1:8000/api/"
+// const REACT_APP_API_URL ="http://127.0.0.1:8000/api/"
+const REACT_APP_API_URL ="https://fb.api.mr-quynh.com/api/"
 // const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 const token = localStorage.getItem('USER_TOKEN') ??"";
 const tokenType = localStorage.getItem('TOKEN_TYPE') ??"";

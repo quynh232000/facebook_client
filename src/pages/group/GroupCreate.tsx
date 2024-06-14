@@ -10,6 +10,7 @@ import avatar_user from "../../assets/base/avatar_user.webp";
 import { createGroup } from "../../services/GroupService";
 import { useNavigate } from "react-router-dom";
 import { setNotify } from "../../redux/reducers/appReducer";
+import { PostModel } from "../../types/post";
 const GroupCreate = () => {
   const stateAuth = useSelector((state: RootState) => state.authReducer);
   const navigate = useNavigate();
@@ -39,6 +40,9 @@ const GroupCreate = () => {
       setLoading(false)
     });
   };
+  const [newPost,setNewPost] = useState<PostModel>()
+  console.log(newPost);
+  
   return (
     <div className=" h-full flex">
       <div className="w-full md:w-sidebar bg-dark-bg border-r border-input p-4 flex flex-col">
@@ -201,7 +205,7 @@ const GroupCreate = () => {
               </div>
             </div>
             <div className="bg-dark-1 flex-1 py-4 px-[40px] flex-col gap-4 text-text-1 relative">
-              <CreatePost />
+              <CreatePost type="user" id="" setNewPost={setNewPost} />
               <div className="absolute top-0 right-0 left-0 bottom-0"></div>
             </div>
           </div>

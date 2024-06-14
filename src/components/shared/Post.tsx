@@ -53,9 +53,9 @@ type PostProps = {
 };
 const Post = ({ post }: PostProps) => {
   let type = "user";
-  if (post.is_group_post) {
+  if (post.is_group_post == 1) {
     type = "group";
-  } else if (post.is_post_page) {
+  } else if (post.is_post_page == 1) {
     type = "page";
   } else {
     type = "user";
@@ -79,10 +79,12 @@ const Post = ({ post }: PostProps) => {
   }, [post, user]);
   const handleLike = () => {
     likePost(post.id).then((res) => {
-      isLike
-        ? setCountLike((prev) => prev - 1)
-        : setCountLike((prev) => prev + 1);
-      res.status && setIsLike(!isLike);
+      if (res && res.status) {
+        isLike
+          ? setCountLike((prev) => +prev - 1)
+          : setCountLike((prev) => +prev + 1);
+        setIsLike(!isLike);
+      }
     });
   };
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -126,7 +128,7 @@ const Post = ({ post }: PostProps) => {
     return <></>;
   } else {
     return (
-      <div  className="bg-dark-bg rounded-lg p-4">
+      <div className="bg-dark-bg rounded-lg p-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             {type == "group" && post.group ? (
@@ -169,9 +171,9 @@ const Post = ({ post }: PostProps) => {
                   >
                     <div className="flex items-end">
                       <Link to={`/user/${post.user.uuid}`}>
-                        <button>
+                        <h4>
                           {post.user.first_name + " " + post.user.last_name}
-                        </button>
+                        </h4>
                       </Link>
                       {post.type && post.type == "change_avatar" && (
                         <a
@@ -194,7 +196,7 @@ const Post = ({ post }: PostProps) => {
                       render={() => <TippyGroupView group={post.group} />}
                     >
                       <Link to={`/groups/${post.group?.uuid}`}>
-                        <button>{post.group?.name}</button>
+                        <h4>{post.group?.name}</h4>
                       </Link>
                     </Tippy>
                   )
@@ -202,7 +204,7 @@ const Post = ({ post }: PostProps) => {
               </h3>
               <div className="flex items-center gap-1 text-[14px] text-text font-medium">
                 {type == "group" && post.user && (
-                  <h3 className="font-medium">
+                  <h3 className="font-bold">
                     <Tippy
                       // visible={false}
                       interactive
@@ -310,7 +312,10 @@ const Post = ({ post }: PostProps) => {
                   </div>
 
                   {post.is_public && isMyPost ? (
-                    <MenuItem onClick={()=>setIsDeleted(true)} className="hover:bg-input flex items-center gap-2 p-2 focus:bg-input">
+                    <MenuItem
+                      onClick={() => setIsDeleted(true)}
+                      className="hover:bg-input flex items-center gap-2 p-2 focus:bg-input"
+                    >
                       <div className="text-light-1 size-[24px]">
                         <FaRegWindowClose className="size-[20px]" />
                       </div>

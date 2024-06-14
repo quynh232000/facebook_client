@@ -138,7 +138,7 @@ const StoriesCreate = () => {
                   <div className="w-fit h-fit">
                     <label
                       htmlFor="story_img"
-                      className=" relative hover:opacity-80 cursor-pointer w-full h-full"
+                      className=" relative hover:opacity-80 cursor-pointer w-full  md:w-[220px] "
                       style={{
                         backgroundImage: "url('" + bg_story + "')",
                         backgroundPosition: "0 - 0px",
